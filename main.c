@@ -1,37 +1,33 @@
-int main(int argc, char *argv[])
+#include <stdio.h>
+#include <stdlib.h>
+#include <SDL/SDL.h>
+#include <SDL/SDL_image.h>
+#include <SDL/SDL_mixer.h>
+#include "work.h"
+int main()
 {
-	SDL_Surface *ecran = NULL, *back=NULL;
-	Perso ennemi;
-	SDL_Rect posBack;
-	SDL_Event event;
-	int min=0, max = 200;	
-	
-	SDL_Init (SDL_INIT_VIDEO);
-	ecran = SDL_SetVideoMode (800,600,32,SDL_HWSURFACE | SDL_DOUBLEBUF);
-	back=IMG_Load ("back.bmp");
-	ennemi.img[0] = IMG_Load("detective.png");
-	if(ennemi.img[0]==NULL)
-		exit(EXIT_FAILURE);
-	
-	
-	posBack.x=0;
-	posBack.y=0;
-	
-	ennemi.pos.x=0;
-	ennemi.pos.y=200;
-	ennemi.direction = 1;
-	
-	while (event.type != SDL_QUIT)
-	{	SDL_PollEvent(&event);
-		
-		//affichage
-		SDL_BlitSurface (back, NULL, ecran, &posBack);
-		deplacer_ennemi (&ennemi, min, max);	
-		afficher_ennemi (&ennemi, ecran);
-		SDL_Flip(ecran);
-		
-		//gestion des evenements...
-		
-	}	
+char pause;
+ecran e;
+perso p;
+int done=1;
+p.continuer = 1;
+SDL_Init(SDL_INIT_EVERYTHING);
+
+
+
+SDL_EnableKeyRepeat(30,30);
+ init_positions(&e,&p);
+while(done)
+{
+
+ init_affich(&e,&p);
+ key_event ( &p,&e);
+SDL_Flip(e.e);
 }
+
+SDL_Quit();
+return 0 ;
+}
+
+
 
